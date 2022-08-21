@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort Animation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="over">
+        <div class="top">
+            <div class="top1">
+                <h1>SORTING VISULIZATION</h1>
+            </div>
+            <div class="top2">
+                <select class="bt sorting-tech">
+                    <option value="bubble">BUBBLE SORT</option>
+                    <option value="merge">MERGE SORT</option>
+                    <option value="quick">QUICK SORT</option>
+                    <option value="selction">SELECTION SORT</option>
+                    <option value="insertion">INSERTION SORT</option>
+                    <option value="heap">HEAP SORT</option>
+                </select>
+                <input type="range" class="bt size" min="10" max="100" value="10" onchange="change()">
+                <button class="bt newval" onclick="chang()">NEW SET</button>
+                <button class="bt start" onclick="MAIN()">SORT</button>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="up">
+                <div class="container">
+                    <div class="grid" id="l0"></div>
+                    <div class="grid" id="l1"></div>
+                    <div class="grid" id="l2"></div>
+                    <div class="grid" id="l3"></div>
+                    <div class="grid" id="l4"></div>
+                    <div class="grid" id="l5"></div>
+                    <div class="grid" id="l6"></div>
+                    <div class="grid" id="l7"></div>
+                    <div class="grid" id="l8"></div>
+                    <div class="grid" id="l9"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <script src="index.js"></script>
+</footer>
+
+</html>
