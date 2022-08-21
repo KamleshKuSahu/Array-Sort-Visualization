@@ -31,9 +31,19 @@ h1 {
   height: 20px;
   background-color: black;
 }
+.grid div:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.grid div:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 .up {
   position: fixed;
   right: 0;
   left: 0;
   height: 100%;
+  padding: 0 4%;
 }
