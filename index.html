@@ -12,8 +12,18 @@
 <body>
     <div class="over">
         <div class="top">
-            <input type="range" class="size" min="10" max="100" step="10" onchange="change()" value="10">
-            <button class="start">sort</button>
+            <h1>SORTING VISULIZATION</h1>
+            <select class="sorting-tech">
+                <option value="bubble">BUBBLE SORT</option>
+                <option value="merge">MERGE SORT</option>
+                <option value="quick">QUICK SORT</option>
+                <option value="selction">SELECTION SORT</option>
+                <option value="insertion">INSERTION SORT</option>
+                <option value="heap">HEAP SORT</option>
+            </select>
+            <input type="range" class="size" min="10" max="100" value="10" onchange="change()">
+            <button class="newval" onclick="chang()">NEW SET</button>
+            <button class="start" onclick="MAIN()">SORT</button>
         </div>
         <div class="bottom">
             <div class="up">
