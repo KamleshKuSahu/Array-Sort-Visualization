@@ -1,26 +1,72 @@
 var t = document.querySelectorAll(".grid");
 var sorting = false;
 var timeout = [];
-document.querySelector(".start").addEventListener("click", function (event) {
-  clearTimeout();
-  if (!sorting) bubbleSort();
+var oper = [];
+
+document.addEventListener("keydown", function (event) {
+  if (event.key == "Enter") document.querySelector(".start").onclick();
 });
 
 for (var i = 0; i < 10; i++) {
   var h = 5 + Math.floor(Math.random() * 95);
   t[i].style.height = h + "%";
 }
-function clearTimeOut() {
-  // setTimeout(() => {
+function changReload() {
+  var m = document.querySelector(".newval");
+  var n = document.querySelector(".start");
+  m.innerText = "Reload";
+  n.innerText = "Reload";
+  m.setAttribute("onclick", "Reload()");
+  n.setAttribute("onclick", "Reload()");
+}
+function Reload() {
+  location.reload();
+}
 
-  // }, 1000000);
-  for (var i = 0; i < timeout.length; i++) {
-    clearTimeout(timeout[i]);
+function MAIN() {
+  clearTimeout();
+  var opt = document.querySelector(".sorting-tech").value;
+  if (!sorting) {
+    switch (opt) {
+      case "bubble":
+        bubbleSort(t);
+        break;
+      case "merge":
+        mergeSort(t);
+        break;
+      // case "quick":
+      //   quickSort();
+      //   break;
+      // case "selction":
+      //   selctionSort();
+      //   break;
+      // case "insertion":
+      //   insertionSort();
+      //   break;
+      // case "heap":
+      //   heapSort();
+      //   break;
+    }
   }
-  // timeout = [];
+}
+
+function clearTime() {
+  for (var i = 0; i < timeout.length; i++) {
+    window.clearTimeout(timeout[i]);
+  }
+  timeout = [];
+}
+function chang() {
+  clearTime();
+  if (sorting) changReload();
+  for (var i = 0; i < t.length; i++) {
+    var h = 5 + Math.floor(Math.random() * 95);
+    t[i].style.height = h + "%";
+  }
 }
 function change() {
-  clearTimeOut();
+  clearTime();
+  if (sorting) changReload();
   var s = document.querySelector(".size").value;
   if (s >= t.length) {
     var si = s - t.length,
@@ -43,6 +89,7 @@ function change() {
     }
   }
   t = document.querySelectorAll(".grid");
+  chang();
 }
 
 function get(ind) {
@@ -52,10 +99,9 @@ function get(ind) {
   return parseInt(k);
 }
 function set(ind, val) {
-  t[ind].style.height = val;
+  t[ind].style.height = val + "%";
 }
 function swap(x, y) {
-  funr(x, y);
   var co1 = t[x].style,
     co2 = t[y].style;
   var t1 = get(x),
@@ -79,29 +125,108 @@ function funb(x, y) {
 }
 
 function timegap(leng) {
-  if (leng < 20) return 200;
-  else if (leng < 50) return 10;
-  else if (length < 80) return 3;
-  else return 1;
+  return Math.ceil(3000 / oper.length);
 }
 
-function bubbleSort() {
+function bubbleSort(t) {
+  oper = [];
+  clearTime();
+  timeout = [];
   sorting = true;
-  var l = t.length;
-  var ti = 1,
-    tgap = 10;
-  for (var i = 0; i < l; i++) {
-    for (var j = 0; j < l - i - 1; j++) {
-      var x = j,
-        y = j + 1;
-      ti += tgap;
-      timeout.push(setTimeout(swap, ti, x, y));
-      ti += tgap;
-      timeout.push(setTimeout(funb, ti, x, y));
+  var le = t.length;
+  var a = [];
+  for (var i = 0; i < le; i++) a.push(get(i));
+  for (var i = 0; i < le; i++) {
+    for (var j = 0; j < le - i - 1; j++) {
+      oper.push([funr, j, j + 1]);
+      if (a[j] > a[j + 1]) {
+        var t = a[j];
+        a[j] = a[j + 1];
+        a[j + 1] = t;
+        oper.push([swap, j, j + 1]);
+      }
+      oper.push([funb, j, j + 1]);
     }
   }
+  run(oper);
+}
+
+function mergeSort(t) {
+  oper = [];
+  clearTime();
+  timeout = [];
+  sorting = true;
+  var le = t.length;
+  var a = [];
+  for (var i = 0; i < le; i++) a.push(get(i));
+  mergesort(a, 0, le - 1);
+  run(oper);
+}
+function mergesort(arr, b, e) {
+  if (b < e) {
+    var m = Math.floor((b + e) / 2);
+    mergesort(arr, b, m);
+    mergesort(arr, m + 1, e);
+    merge(arr, b, m, e);
+  }
+  return;
+}
+function merge(arr, b, m, e) {
+  var len1 = m - b + 1,
+    len2 = e - m;
+  var l = [];
+  var r = [];
+  for (var i = 0; i < len1; i++) l[i] = arr[b + i];
+  for (var i = 0; i < len2; i++) r[i] = arr[m + 1 + i];
+  var i = 0,
+    j = 0,
+    k = b;
+  while (i < len1 && j < len2) {
+    if (l[i] < r[j]) {
+      arr[k] = l[i];
+      oper.push([funr, k, k]);
+      oper.push([set, k, l[i]]);
+      oper.push([funb, k, k]);
+      k++;
+      i++;
+    } else {
+      arr[k] = r[j];
+      oper.push([funr, k, k]);
+      oper.push([set, k, r[j]]);
+      oper.push([funb, k, k]);
+      k++;
+      j++;
+    }
+  }
+  while (i < len1) {
+    arr[k] = l[i];
+    oper.push([funr, k, k]);
+    oper.push([set, k, l[i]]);
+    oper.push([funb, k, k]);
+    k++;
+    i++;
+  }
+  while (j < len2) {
+    arr[k] = r[j];
+    oper.push([funr, k, k]);
+    oper.push([set, k, l[i]]);
+    oper.push([funb, k, k]);
+    k++;
+    j++;
+  }
+  return;
+}
+
+//---------------------------------------
+function run(op) {
+  var ti = 0;
+  var tgap = timegap(t.length);
+  for (var i = 0; i < op.length; i++) {
+    timeout[i] = setTimeout(op[i][0], ti, op[i][1], op[i][2]);
+    ti += tgap;
+  }
   timeout.push(
-    setTimeout(() => {
+    setTimeout(function () {
       sorting = false;
     }, ti)
   );
