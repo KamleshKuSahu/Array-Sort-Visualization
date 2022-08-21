@@ -34,12 +34,12 @@ function MAIN() {
       case "merge":
         mergeSort(t);
         break;
-      // case "quick":
-      //   quickSort();
-      //   break;
-      // case "selction":
-      //   selctionSort();
-      //   break;
+      case "quick":
+        quickSort();
+        break;
+      case "selction":
+        selctionSort(t);
+        break;
       // case "insertion":
       //   insertionSort();
       //   break;
@@ -217,6 +217,80 @@ function merge(arr, b, m, e) {
   return;
 }
 
+//---------------------------------------
+function quickSort() {
+  oper = [];
+  clearTime();
+  timeout = [];
+  sorting = true;
+  var le = t.length;
+  var a = [];
+  for (var i = 0; i < le; i++) a.push(get(i));
+  quick(a, 0, le - 1);
+  run(oper);
+}
+function quick(a, start, end) {
+  if (start < end) {
+    var p = partition(a, start, end);
+    quick(a, start, p - 1);
+    quick(a, p + 1, end);
+  }
+}
+function partition(a, start, end) {
+  var pivot = a[end];
+  oper.push([funr, end, end]);
+  var i = start - 1;
+
+  for (var j = start; j <= end - 1; j++) {
+    oper.push([funr, j, j]);
+    if (a[j] < pivot) {
+      i++;
+      oper.push([funr, i, i]);
+      var t = a[i];
+      a[i] = a[j];
+      a[j] = t;
+      oper.push([swap, i, j]);
+      oper.push([funb, i, i]);
+    }
+    oper.push([funb, j, j]);
+  }
+  oper.push([funr, i + 1, i + 1]);
+  var t = a[i + 1];
+  a[i + 1] = a[end];
+  a[end] = t;
+  oper.push([swap, i + 1, end]);
+  oper.push([funb, end, end]);
+  oper.push([funb, i + 1, i + 1]);
+  return i + 1;
+}
+//---------------------------------------
+function selctionSort(t) {
+  oper = [];
+  clearTime();
+  timeout = [];
+  sorting = true;
+  var le = t.length;
+  var a = [];
+  for (var i = 0; i < le; i++) a.push(get(i));
+  console.log(a);
+  for (var i = 0; i < le; i++) {
+    var max = 0;
+    for (var j = 0; j < le - i; j++) {
+      oper.push([funr, j, j]);
+      if (a[j] > a[max]) max = j;
+      oper.push([funb, j, j]);
+    }
+    oper.push([funr, le - i - 1, le - i - 1]);
+    oper.push([funr, max, max]);
+    var temp = a[le - i - 1];
+    a[le - i - 1] = a[max];
+    a[max] = temp;
+    oper.push([swap, max, le - i - 1]);
+    oper.push([funb, le - i - 1, le - i - 1]);
+    oper.push([funb, max, max]);
+  }
+  run(oper);
+}
 //---------------------------------------
 function run(op) {
   var ti = 0;
