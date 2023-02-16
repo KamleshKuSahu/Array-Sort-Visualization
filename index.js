@@ -2,12 +2,12 @@ var t = document.querySelectorAll(".grid");
 var sorting = false;
 var timeout = [];
 var oper = [];
-
+change(30);
 document.addEventListener("keydown", function (event) {
   if (event.key == "Enter") document.querySelector(".start").onclick();
 });
 
-change(30);
+
 // for (var i = 0; i < 10; i++) {
 //   var h = 5 + Math.floor(Math.random() * 95);
 //   t[i].style.height = h + "%";
