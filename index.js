@@ -2,11 +2,10 @@ var t = document.querySelectorAll(".grid");
 var sorting = false;
 var timeout = [];
 var oper = [];
-change(30);
+change();
 document.addEventListener("keydown", function (event) {
   if (event.key == "Enter") document.querySelector(".start").onclick();
 });
-
 
 // for (var i = 0; i < 10; i++) {
 //   var h = 5 + Math.floor(Math.random() * 95);
@@ -69,6 +68,7 @@ function change() {
   clearTime();
   if (sorting) changReload();
   var s = document.querySelector(".size").value;
+  console.log(s + " ");
   if (s >= t.length) {
     var si = s - t.length,
       xx = t.length;
@@ -92,33 +92,33 @@ function change() {
   t = document.querySelectorAll(".grid");
   chang();
 }
-function change(value) {
-  clearTime();
-  if (sorting) changReload();
-  var s = value;
-  if (s >= t.length) {
-    var si = s - t.length,
-      xx = t.length;
-    for (var i = 0; i < si; i++) {
-      var ele = document.createElement("div");
-      ele.className = "grid";
-      ele.id = "l" + xx;
-      xx++;
-      var h = 5 + Math.floor(Math.random() * 95);
-      ele.style.height = h + "%";
-      document.querySelector(".container").append(ele);
-    }
-  } else {
-    var si = t.length - 1;
-    for (var i = si; i >= s; i--) {
-      var ti = document.querySelector(".container");
-      var xx = document.querySelector("#l" + i);
-      ti.removeChild(xx);
-    }
-  }
-  t = document.querySelectorAll(".grid");
-  chang();
-}
+// function change(value) {
+//   clearTime();
+//   if (sorting) changReload();
+//   var s = value;
+//   if (s >= t.length) {
+//     var si = s - t.length,
+//       xx = t.length;
+//     for (var i = 0; i < si; i++) {
+//       var ele = document.createElement("div");
+//       ele.className = "grid";
+//       ele.id = "l" + xx;
+//       xx++;
+//       var h = 5 + Math.floor(Math.random() * 95);
+//       ele.style.height = h + "%";
+//       document.querySelector(".container").append(ele);
+//     }
+//   } else {
+//     var si = t.length - 1;
+//     for (var i = si; i >= s; i--) {
+//       var ti = document.querySelector(".container");
+//       var xx = document.querySelector("#l" + i);
+//       ti.removeChild(xx);
+//     }
+//   }
+//   t = document.querySelectorAll(".grid");
+//   chang();
+// }
 
 function get(ind) {
   var k = t[ind].style.height;
